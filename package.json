@@ -1,0 +1,8 @@
+{
+  "name": "epochalypse.xyz",
+  "version": "1.0.0",
+  "description": "Countdown to the [Epochalypse](https://en.wikipedia.org/wiki/Year_2038_problem)",
+  "dependencies": {
+    "firebase-tools" : "latest"
+  }
+}
