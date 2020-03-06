@@ -10,20 +10,19 @@ function initializeClock(id, endtime) {
   var v = moment.utc(endtime);
 
   function updateClock() {
-		var duration = moment.duration(v.diff(moment.utc()));
+    var duration = moment.duration(v.diff(moment.utc()));
 
-    yearsSpan.innerHTML = Number(duration.as('years').toFixed(3));
+    //yearsSpan.innerHTML = Number(duration.as('years').toFixed(3));
     yearsSpan.innerHTML = Number(duration.years());
-    monthsSpan.innerHTML =   Number(duration.as('months').toFixed(3));
+    //monthsSpan.innerHTML =   Number(duration.as('months').toFixed(3));
     monthsSpan.innerHTML =   Number(duration.months());
-    daysSpan.innerHTML =   Number(duration.as('days').toFixed(3));
-    daysSpan.innerHTML =   Number(duration.as('days'));
-    //daysSpan.innerHTML =   Number(duration.days());
-    hoursSpan.innerHTML = Number(duration.as('hours').toFixed(3));
+    //daysSpan.innerHTML =   Number(duration.as('days').toFixed(3));
+    daysSpan.innerHTML =   Number(duration.days());
+    //hoursSpan.innerHTML = Number(duration.as('hours').toFixed(3));
     hoursSpan.innerHTML = Number(duration.hours());
-    minutesSpan.innerHTML = Number(duration.as('minutes').toFixed(3));
+    //minutesSpan.innerHTML = Number(duration.as('minutes').toFixed(3));
     minutesSpan.innerHTML = Number(duration.minutes());
-    secondsSpan.innerHTML = Number(duration.as('seconds').toFixed(0));
+    //secondsSpan.innerHTML = Number(duration.as('seconds').toFixed(0));
     secondsSpan.innerHTML = Number(duration.seconds());
   }
 
