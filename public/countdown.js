@@ -7,8 +7,7 @@ function initializeClock(id, endtime) {
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
   var secondsSpan = clock.querySelector('.seconds');
-	var v = moment.utc(0*1000*1000000000);
-	var v = moment.utc(1000*1765418057);
+  var v = moment.utc(endtime);
 
   function updateClock() {
 		var duration = moment.duration(v.diff(moment.utc()));
