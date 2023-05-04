@@ -1,9 +1,0 @@
-language: node_js
-node_js:
-  - "12"
-cache:
-  - yarn
-script:
-  - echo "Pushing to Firebase"
-after_success:
-  - firebase deploy --token "$FIREBASE_TOKEN"
