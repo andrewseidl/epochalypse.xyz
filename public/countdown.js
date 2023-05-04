@@ -29,5 +29,5 @@ function initializeClock(id, endtime) {
   updateClock();
 }
 
-var deadline = new Date(4294967296000/2);
+var deadline = new Date(2 ** 31 * 1000);
 initializeClock('clockdiv', deadline);
