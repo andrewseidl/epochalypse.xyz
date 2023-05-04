@@ -1,40 +1,41 @@
 <head>
-<link rel=stylesheet href="countdown.css" type="text/css">
-
+  <link rel="stylesheet" href="countdown.css" type="text/css" />
 </head>
 
-
 <body>
-<h1>Countdown Clock</h1>
-<div id="clockdiv">
-  <div>
-    <span class="years"></span>
-    <div class="smalltext">Years</div>
+  <h1>Countdown Clock</h1>
+  <div id="clockdiv">
+    <div>
+      <span class="years"></span>
+      <div class="smalltext">Years</div>
+    </div>
+    <div>
+      <span class="months"></span>
+      <div class="smalltext">Months</div>
+    </div>
+    <div>
+      <span class="days"></span>
+      <div class="smalltext">Days</div>
+    </div>
+    <div>
+      <span class="hours"></span>
+      <div class="smalltext">Hours</div>
+    </div>
+    <div>
+      <span class="minutes"></span>
+      <div class="smalltext">Minutes</div>
+    </div>
+    <div>
+      <span class="seconds"></span>
+      <div class="smalltext">Seconds</div>
+    </div>
   </div>
-  <div>
-    <span class="months"></span>
-    <div class="smalltext">Months</div>
+
+  <hr />
+
+  <div class="smalltext" id="link">
+    <a href="https://en.wikipedia.org/wiki/Year_2038_problem">Year 2038 Problem - the Epochalypse</a>
   </div>
-  <div>
-    <span class="days"></span>
-    <div class="smalltext">Days</div>
-  </div>
-  <div>
-    <span class="hours"></span>
-    <div class="smalltext">Hours</div>
-  </div>
-  <div>
-    <span class="minutes"></span>
-    <div class="smalltext">Minutes</div>
-  </div>
-  <div>
-    <span class="seconds"></span>
-    <div class="smalltext">Seconds</div>
-  </div>
-</div>
-<div id="link">
-  <a href="https://en.wikipedia.org/wiki/Year_2038_problem">Year 2038 Problem - the Epochalypse</a>
-</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
   <script src="https://raw.githubusercontent.com/codebox/moment-precise-range/master/moment-precise-range.js"></script>
