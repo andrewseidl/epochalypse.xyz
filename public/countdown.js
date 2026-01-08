@@ -9,7 +9,8 @@ function initializeClock(id, endtime) {
   var v = moment.utc(endtime);
 
   function updateClock() {
-    var diff = moment.preciseDiff(moment.utc(), v, true);
+    var now = moment.utc();
+    var diff = moment.preciseDiff(now, v, true);
 
     function pad(n) {
       return (n < 10 ? '0' : '') + n;
@@ -21,6 +22,33 @@ function initializeClock(id, endtime) {
     hoursSpan.innerHTML = pad(diff.hours);
     minutesSpan.innerHTML = pad(diff.minutes);
     secondsSpan.innerHTML = pad(diff.seconds);
+
+    // Update binary display
+    // Get current Unix timestamp in seconds
+    var currentTimestamp = Math.floor(now.valueOf() / 1000);
+    // Convert to binary string
+    var binaryString = currentTimestamp.toString(2);
+    // Pad to 32 bits for consistency (though it's currently 31 bits until 2038)
+    binaryString = "0".repeat(32 - binaryString.length) + binaryString;
+    
+    // Render bits
+    var registerHtml = '';
+    for (var i = 0; i < binaryString.length; i++) {
+      var bitVal = binaryString[i];
+      var classes = 'bit-box ' + (bitVal === '1' ? 'one' : 'zero');
+      if (i === 0) classes += ' sign-bit'; // Highlight the sign bit
+      registerHtml += '<span class="' + classes + '">' + bitVal + '</span>';
+      
+      // Add a separator every 8 bits for readability, but not after the last one
+      if ((i + 1) % 8 === 0 && i !== 31) {
+        registerHtml += '<span class="byte-sep"></span>';
+      }
+    }
+    
+    var bitRegister = document.getElementById('bit-register');
+    if (bitRegister) {
+      bitRegister.innerHTML = registerHtml;
+    }
   }
 
   updateClock();
