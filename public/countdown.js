@@ -2,7 +2,6 @@ function initializeClock(id, endtime) {
   var clock = document.getElementById(id);
   var yearsSpan = clock.querySelector('.years');
   var monthsSpan = clock.querySelector('.months');
-  var weeksSpan = clock.querySelector('.weeks');
   var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
@@ -10,24 +9,25 @@ function initializeClock(id, endtime) {
   var v = moment.utc(endtime);
 
   function updateClock() {
-    var duration = moment.duration(v.diff(moment.utc()));
+    var diff = moment.preciseDiff(moment.utc(), v, true);
 
-    //yearsSpan.innerHTML = Number(duration.as('years').toFixed(3));
-    yearsSpan.innerHTML = Number(duration.years());
-    //monthsSpan.innerHTML =   Number(duration.as('months').toFixed(3));
-    monthsSpan.innerHTML =   Number(duration.months());
-    //daysSpan.innerHTML =   Number(duration.as('days').toFixed(3));
-    daysSpan.innerHTML =   Number(duration.days());
-    //hoursSpan.innerHTML = Number(duration.as('hours').toFixed(3));
-    hoursSpan.innerHTML = Number(duration.hours());
-    //minutesSpan.innerHTML = Number(duration.as('minutes').toFixed(3));
-    minutesSpan.innerHTML = Number(duration.minutes());
-    //secondsSpan.innerHTML = Number(duration.as('seconds').toFixed(0));
-    secondsSpan.innerHTML = Number(duration.seconds());
+    function pad(n) {
+      return (n < 10 ? '0' : '') + n;
+    }
+
+    yearsSpan.innerHTML = diff.years;
+    monthsSpan.innerHTML = pad(diff.months);
+    daysSpan.innerHTML = pad(diff.days);
+    hoursSpan.innerHTML = pad(diff.hours);
+    minutesSpan.innerHTML = pad(diff.minutes);
+    secondsSpan.innerHTML = pad(diff.seconds);
   }
 
   updateClock();
+  setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(2 ** 31 * 1000);
+// 2**31 seconds is the moment of overflow for 32-bit signed integers
+// (Jan 19 2038 03:14:08 UTC)
+var deadline = new Date(Math.pow(2, 31) * 1000);
 initializeClock('clockdiv', deadline);
