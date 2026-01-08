@@ -1,20 +1,21 @@
 function initializeClock(id, endtime) {
-  var clock = document.getElementById(id);
-  var yearsSpan = clock.querySelector('.years');
-  var monthsSpan = clock.querySelector('.months');
-  var daysSpan = clock.querySelector('.days');
-  var hoursSpan = clock.querySelector('.hours');
-  var minutesSpan = clock.querySelector('.minutes');
-  var secondsSpan = clock.querySelector('.seconds');
-  var v = moment.utc(endtime);
+  const clock = document.getElementById(id);
+  const yearsSpan = clock.querySelector('.years');
+  const monthsSpan = clock.querySelector('.months');
+  const daysSpan = clock.querySelector('.days');
+  const hoursSpan = clock.querySelector('.hours');
+  const minutesSpan = clock.querySelector('.minutes');
+  const secondsSpan = clock.querySelector('.seconds');
+  const bitRegister = document.getElementById('bit-register');
+  const v = moment.utc(endtime);
+
+  function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
 
   function updateClock() {
-    var now = moment.utc();
-    var diff = moment.preciseDiff(now, v, true);
-
-    function pad(n) {
-      return (n < 10 ? '0' : '') + n;
-    }
+    const now = moment.utc();
+    const diff = moment.preciseDiff(now, v, true);
 
     yearsSpan.innerHTML = diff.years;
     monthsSpan.innerHTML = pad(diff.months);
@@ -23,29 +24,24 @@ function initializeClock(id, endtime) {
     minutesSpan.innerHTML = pad(diff.minutes);
     secondsSpan.innerHTML = pad(diff.seconds);
 
-    // Update binary display
-    // Get current Unix timestamp in seconds
-    var currentTimestamp = Math.floor(now.valueOf() / 1000);
-    // Convert to binary string
-    var binaryString = currentTimestamp.toString(2);
-    // Pad to 32 bits for consistency (though it's currently 31 bits until 2038)
-    binaryString = "0".repeat(32 - binaryString.length) + binaryString;
-    
-    // Render bits
-    var registerHtml = '';
-    for (var i = 0; i < binaryString.length; i++) {
-      var bitVal = binaryString[i];
-      var classes = 'bit-box ' + (bitVal === '1' ? 'one' : 'zero');
-      if (i === 0) classes += ' sign-bit'; // Highlight the sign bit
-      registerHtml += '<span class="' + classes + '">' + bitVal + '</span>';
-      
-      // Add a separator every 8 bits for readability, but not after the last one
+    // Update 32-bit register display
+    const currentTimestamp = Math.floor(now.valueOf() / 1000);
+    const binaryString = currentTimestamp.toString(2).padStart(32, '0');
+
+    let registerHtml = '';
+    for (let i = 0; i < 32; i++) {
+      const bitVal = binaryString[i];
+      let classes = 'bit-box ' + (bitVal === '1' ? 'one' : 'zero');
+      if (i === 0) classes += ' sign-bit';
+
+      registerHtml += `<span class="${classes}">${bitVal}</span>`;
+
+      // Add byte separator
       if ((i + 1) % 8 === 0 && i !== 31) {
         registerHtml += '<span class="byte-sep"></span>';
       }
     }
-    
-    var bitRegister = document.getElementById('bit-register');
+
     if (bitRegister) {
       bitRegister.innerHTML = registerHtml;
     }
@@ -57,5 +53,5 @@ function initializeClock(id, endtime) {
 
 // 2**31 seconds is the moment of overflow for 32-bit signed integers
 // (Jan 19 2038 03:14:08 UTC)
-var deadline = new Date(Math.pow(2, 31) * 1000);
+const deadline = new Date(Math.pow(2, 31) * 1000);
 initializeClock('clockdiv', deadline);
